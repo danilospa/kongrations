@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require 'webmock/rspec'
-require './lib/runner'
+require './lib/kongrations'
 require_relative './shared_examples'
 
 def stub_kong_request(method, path, request_body = {}, response_body = {})
   stub = stub_request(method, "#{ENV['KONG_BASE_URL']}#{path}")
-         .with(headers: { 'apikey' => Request::KONG_ADMIN_API_KEY })
+         .with(headers: { 'apikey' => Kongrations::Request::KONG_ADMIN_API_KEY })
          .and_return(body: response_body.to_json)
   stub.with(body: request_body.to_json) unless request_body.nil?
   stub
@@ -33,14 +33,14 @@ def stub_change_plugin_request(api_name, plugin_id, payload)
 end
 
 def delete_data_file
-  File.delete(MigrationData::FILE_NAME) if File.exist?(MigrationData::FILE_NAME)
+  File.delete(Kongrations::MigrationData::FILE_NAME) if File.exist?(Kongrations::MigrationData::FILE_NAME)
 end
 
 def mock_data_file(data)
-  File.open(MigrationData::FILE_NAME, 'w') { |f| f.puts data.to_json }
+  File.open(Kongrations::MigrationData::FILE_NAME, 'w') { |f| f.puts data.to_json }
 end
 
-RSpec.describe Runner do
+RSpec.describe Kongrations do
   subject { described_class }
 
   after { delete_data_file }
@@ -167,7 +167,7 @@ RSpec.describe Runner do
       end
 
       it 'saves data for two plugins on migration data file' do
-        content = JSON.parse(File.read(MigrationData::FILE_NAME), symbolize_names: true)
+        content = JSON.parse(File.read(Kongrations::MigrationData::FILE_NAME), symbolize_names: true)
         expect(content[:'api name']).to eq plugins: {
           cors: 'first plugin id',
           apikey: 'second plugin id'

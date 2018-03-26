@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative './src/migration'
-require_relative './src/migration_data'
+require_relative './kongrations/migration'
+require_relative './kongrations/migration_data'
 
-module Runner
+module Kongrations
   def self.run(migrations_folder)
     migrations = migrations_to_run(migrations_folder)
 

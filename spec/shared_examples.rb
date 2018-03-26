@@ -8,7 +8,7 @@ RSpec.shared_examples 'behaves like a migration' do |migrations_folder, data_to_
     File.basename(migration_file).gsub('.rb', '')
   end
   let(:migration_data) do
-    JSON.parse(File.read(MigrationData::FILE_NAME), symbolize_names: true)
+    JSON.parse(File.read(Kongrations::MigrationData::FILE_NAME), symbolize_names: true)
   end
 
   before { subject.run(migrations_path) }
