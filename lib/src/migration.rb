@@ -3,6 +3,10 @@
 Dir["#{__dir__}/requests/*.rb"].each { |file| require file }
 
 class Migration
+  def initialize(migration_name)
+    @migration_name = migration_name
+  end
+
   def run
     response = change.execute
     response.save_data(@migration_name) if response.success?
@@ -35,5 +39,11 @@ class Migration
     change_plugin_request = ChangePluginRequest.new(api_name, plugin_name)
     yield(change_plugin_request)
     change_plugin_request
+  end
+
+  def self.build(migration_name, conten_to_eval)
+    klass = Migration.new(migration_name)
+    klass.instance_eval("def change; #{conten_to_eval}; end", __FILE__, __LINE__)
+    klass
   end
 end

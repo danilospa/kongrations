@@ -9,7 +9,7 @@ class CreatePluginResponse < Response
     plugin_id = body[:id]
     {
       api_name => {
-        plugins: {
+        'plugins' => {
           plugin_name => plugin_id
         }
       }

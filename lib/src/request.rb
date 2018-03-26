@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative './migration_data'
 require 'net/http'
 require 'json'
 require 'dotenv/load'
+require_relative './migration_data'
 
 Dir["#{__dir__}/responses/*.rb"].each { |file| require file }
 
@@ -21,7 +21,7 @@ class Request
 
   def execute
     http = Net::HTTP.new(KONG_BASE_URL, 80)
-    request = METHODS_MAPPER[method].new(path, { 'Content-Type' => 'application/json', 'apikey' => KONG_ADMIN_API_KEY })
+    request = METHODS_MAPPER[method].new(path, 'Content-Type' => 'application/json', 'apikey' => KONG_ADMIN_API_KEY)
     request.body = payload.to_json unless payload.nil?
     response = http.request(request)
     initialize_response_class(response)

@@ -11,7 +11,7 @@ class ChangePluginRequest < Request
   end
 
   def path
-    plugin_id = migration_data[api_name][:plugins][plugin_name]
+    plugin_id = migration_data[api_name]['plugins'][plugin_name]
     "/apis/#{api_name}/plugins/#{plugin_id}"
   end
 

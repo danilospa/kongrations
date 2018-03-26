@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative './migration_data'
 require 'json'
+require_relative './migration_data'
 
 class Response
   def initialize(response, request)
