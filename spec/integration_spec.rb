@@ -4,9 +4,17 @@ require 'webmock/rspec'
 require './lib/kongrations'
 require_relative './shared_examples'
 
+def kong_admin_url
+  'kong-admin-url.com'
+end
+
+def kong_admin_api_key
+  '123456789'
+end
+
 def stub_kong_request(method, path, request_body = {}, response_body = {})
-  stub = stub_request(method, "#{ENV['KONG_BASE_URL']}#{path}")
-         .with(headers: { 'apikey' => Kongrations::Request::KONG_ADMIN_API_KEY })
+  stub = stub_request(method, "http://#{kong_admin_url}#{path}")
+         .with(headers: { 'apikey' => kong_admin_api_key })
          .and_return(body: response_body.to_json)
   stub.with(body: request_body.to_json) unless request_body.nil?
   stub
@@ -32,20 +40,34 @@ def stub_change_plugin_request(api_name, plugin_id, payload)
   stub_kong_request(:patch, "/apis/#{api_name}/plugins/#{plugin_id}", payload)
 end
 
-def delete_data_file
-  File.delete(Kongrations::MigrationData::FILE_NAME) if File.exist?(Kongrations::MigrationData::FILE_NAME)
+def delete_mocked_files
+  File.delete(Kongrations::MigrationData.file_name) if File.exist?(Kongrations::MigrationData.file_name)
+  File.delete(Kongrations::CurrentEnvironment::FILE_NAME) if File.exist?(Kongrations::CurrentEnvironment::FILE_NAME)
 end
 
 def mock_data_file(data)
-  File.open(Kongrations::MigrationData::FILE_NAME, 'w') { |f| f.puts data.to_json }
+  File.open(Kongrations::MigrationData.file_name, 'w') { |f| f.puts data.to_json }
+end
+
+def mock_config_file(data)
+  File.open(Kongrations::CurrentEnvironment::FILE_NAME, 'w') { |f| f.puts JSON.parse(data.to_json).to_yaml }
 end
 
 RSpec.describe Kongrations do
   subject { described_class }
 
-  after { delete_data_file }
+  after { delete_mocked_files }
 
   describe '.run' do
+    before do
+      environment = {
+        name: 'default',
+        'kong-admin-url': kong_admin_url,
+        'kong-admin-api-key': kong_admin_api_key
+      }
+      mock_config_file(environments: [environment])
+    end
+
     context 'when creating api' do
       before do
         payload = {
@@ -98,7 +120,7 @@ RSpec.describe Kongrations do
         }
       }
 
-      include_examples 'behaves like a migration', 'create_plugin', data_to_save
+      include_examples 'behaves like a migration', 'create_plugin', 'default', data_to_save
     end
 
     context 'when changing plugin on api' do
@@ -167,11 +189,45 @@ RSpec.describe Kongrations do
       end
 
       it 'saves data for two plugins on migration data file' do
-        content = JSON.parse(File.read(Kongrations::MigrationData::FILE_NAME), symbolize_names: true)
+        content = JSON.parse(File.read(Kongrations::MigrationData.file_name), symbolize_names: true)
         expect(content[:'api name']).to eq plugins: {
           cors: 'first plugin id',
           apikey: 'second plugin id'
         }
+      end
+    end
+
+    context 'when using environments' do
+      before do
+        staging_env = {
+          name: 'staging',
+          'kong-admin-url': kong_admin_url,
+          'kong-admin-api-key': kong_admin_api_key
+        }
+        production_env = {
+          name: 'production',
+          'kong-admin-url': kong_admin_url,
+          'kong-admin-api-key': kong_admin_api_key
+        }
+        mock_config_file(environments: [staging_env, production_env])
+      end
+
+      context 'when using staging' do
+        before do
+          payload = 'payload for staging'
+          @request_stub = stub_create_api_request(payload)
+        end
+
+        include_examples 'behaves like a migration', 'create_api_with_two_envs', 'staging'
+      end
+
+      context 'when using production' do
+        before do
+          payload = 'payload for production'
+          @request_stub = stub_create_api_request(payload)
+        end
+
+        include_examples 'behaves like a migration', 'create_api_with_two_envs', 'production'
       end
     end
   end

@@ -1,17 +1,30 @@
 # frozen_string_literal: true
 
+require_relative './environment'
 Dir["#{__dir__}/requests/*.rb"].each { |file| require file }
 
 module Kongrations
   class Migration
-    def initialize(migration_name)
+    def initialize(migration_name, current_env)
       @migration_name = migration_name
+      @current_env = current_env
+      @environments = {}
     end
 
     def run
       response = change.execute
       response.save_data(@migration_name) if response.success?
       response
+    end
+
+    def config_env(env_name)
+      environment = Environment.new
+      yield(environment)
+      @environments[env_name.to_s] = environment
+    end
+
+    def env
+      @environments[@current_env]
     end
 
     def create_api
@@ -42,8 +55,8 @@ module Kongrations
       change_plugin_request
     end
 
-    def self.build(migration_name, conten_to_eval)
-      klass = new(migration_name)
+    def self.build(migration_name, current_env, conten_to_eval)
+      klass = new(migration_name, current_env)
       klass.instance_eval("def change; #{conten_to_eval}; end", __FILE__, __LINE__)
       klass
     end

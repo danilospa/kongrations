@@ -2,16 +2,19 @@
 
 require_relative './kongrations/migration'
 require_relative './kongrations/migration_data'
+require_relative './kongrations/current_environment'
 
 module Kongrations
-  def self.run(migrations_folder)
+  def self.run(migrations_folder, env = 'default')
+    CurrentEnvironment.load!(env)
+
     migrations = migrations_to_run(migrations_folder)
 
     migrations.each do |migration_file|
       migration_name = File.basename(migration_file).gsub('.rb', '')
       migration_content = File.read(migration_file)
 
-      migration = Migration.build(migration_name, migration_content)
+      migration = Migration.build(migration_name, env, migration_content)
 
       response = migration.run
 
@@ -27,7 +30,7 @@ module Kongrations
   def self.migrations_to_run(folder)
     migration_files = Dir.glob(File.join(folder, '*.rb'))
 
-    MigrationData.load
+    MigrationData.load!
     last_migration = MigrationData.last_migration
     return migration_files if last_migration.nil?
 

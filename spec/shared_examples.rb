@@ -1,17 +1,17 @@
 
 # frozen_string_literal: true
 
-RSpec.shared_examples 'behaves like a migration' do |migrations_folder, data_to_save = nil|
+RSpec.shared_examples 'behaves like a migration' do |migrations_folder, env = 'default', data_to_save = nil|
   let(:migrations_path) { "./spec/fixtures/migrations/#{migrations_folder}" }
   let(:file_name) do
     migration_file = Dir.glob(File.join(migrations_path, '*.rb')).first
     File.basename(migration_file).gsub('.rb', '')
   end
   let(:migration_data) do
-    JSON.parse(File.read(Kongrations::MigrationData::FILE_NAME), symbolize_names: true)
+    JSON.parse(File.read(Kongrations::MigrationData.file_name), symbolize_names: true)
   end
 
-  before { subject.run(migrations_path) }
+  before { subject.run(migrations_path, env) }
 
   it 'performs correct request' do
     expect(@request_stub).to have_been_requested
