@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 create_api do |api|
   api.payload = {
     name: 'api name',

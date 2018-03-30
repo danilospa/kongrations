@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 config_env :staging do |e|
   e.payload = 'payload for staging'
 end
