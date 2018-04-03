@@ -12,11 +12,11 @@ module Kongrations
     end
 
     def self.last_migration
-      @data[:last_migration]
+      @data['last_migration']
     end
 
     def self.save(migration_name, data)
-      @data[:last_migration] = migration_name
+      @data['last_migration'] = migration_name
       @data.deep_merge!(data) unless data.nil?
       File.open(file_name, 'w') { |f| f.puts @data.to_json }
     end

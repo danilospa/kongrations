@@ -54,6 +54,8 @@ def mock_config_file(data)
 end
 
 RSpec.describe Kongrations do
+  let(:migrations_path) { './spec/fixtures/migrations' }
+
   subject { described_class }
 
   after { delete_mocked_files }
@@ -154,7 +156,7 @@ RSpec.describe Kongrations do
         }
         @create_plugin_request_stub = stub_create_plugin_request('api name', plugin_payload, plugin_response)
         @change_plugin_request_stub = stub_change_plugin_request('api name', 'plugin id', config: { methods: 'POST' })
-        subject.run('./spec/fixtures/migrations/create_then_change_plugin')
+        subject.run("#{migrations_path}/create_then_change_plugin")
       end
 
       it 'performs correct requests' do
@@ -180,7 +182,7 @@ RSpec.describe Kongrations do
         }
         second_plugin_response = { id: 'second plugin id' }
         @second_stub = stub_create_plugin_request('api name', second_plugin_payload, second_plugin_response)
-        subject.run('./spec/fixtures/migrations/create_two_plugins')
+        subject.run("#{migrations_path}/create_two_plugins")
       end
 
       it 'performs correct requests' do
@@ -194,6 +196,18 @@ RSpec.describe Kongrations do
           cors: 'first plugin id',
           apikey: 'second plugin id'
         }
+      end
+    end
+
+    context 'when running migration after the first one has already be run' do
+      before do
+        mock_data_file(last_migration: '01_create_api')
+        @request_stub = stub_change_api_request('api name', upstream_url: 'upstream url')
+        subject.run("#{migrations_path}/change_api_after_already_run_migration")
+      end
+
+      it 'performs only change api request' do
+        expect(@request_stub).to have_been_requested
       end
     end
 

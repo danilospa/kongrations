@@ -35,7 +35,8 @@ module Kongrations
     return migration_files if last_migration.nil?
 
     last_migration_index = migration_files.find_index { |m| m.end_with?("#{last_migration}.rb") }
-    migration_files.slice(0, last_migration_index + 1)
+    migration_files.slice!(0, last_migration_index + 1)
+    migration_files
   end
 
   def self.print(data)
