@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../response'
+require 'kongrations/response'
 
 module Kongrations
   class CreatePluginResponse < Response

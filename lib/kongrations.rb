@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require_relative './kongrations/migration'
-require_relative './kongrations/migration_data'
-require_relative './kongrations/current_environment'
+require 'kongrations/version'
+require 'kongrations/migration'
+require 'kongrations/migration_data'
+require 'kongrations/current_environment'
 
 module Kongrations
   def self.run(migrations_folder, env = 'default')

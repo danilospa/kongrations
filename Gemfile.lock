@@ -1,3 +1,8 @@
+PATH
+  remote: .
+  specs:
+    kongrations (0.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -19,6 +24,7 @@ GEM
       method_source (~> 0.9.0)
     public_suffix (3.0.2)
     rainbow (3.0.0)
+    rake (10.5.0)
     rspec (3.7.0)
       rspec-core (~> 3.7.0)
       rspec-expectations (~> 3.7.0)
@@ -51,7 +57,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler (~> 1.16)
+  kongrations!
   pry (= 0.11.3)
+  rake (~> 10.0)
   rspec (= 3.7.0)
   rubocop (= 0.54.0)
   webmock (= 3.3.0)

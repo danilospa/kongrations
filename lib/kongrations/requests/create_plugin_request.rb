@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative '../request'
+require 'kongrations/request'
 
 module Kongrations
   class CreatePluginRequest < Request

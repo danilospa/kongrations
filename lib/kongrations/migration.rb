@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './environment'
+require 'kongrations/environment'
 Dir["#{__dir__}/requests/*.rb"].each { |file| require file }
 
 module Kongrations

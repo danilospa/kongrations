@@ -2,8 +2,8 @@
 
 require 'net/http'
 require 'json'
-require_relative './migration_data'
-require_relative './current_environment'
+require 'kongrations/migration_data'
+require 'kongrations/current_environment'
 
 Dir["#{__dir__}/responses/*.rb"].each { |file| require file }
 

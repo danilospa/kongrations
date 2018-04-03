@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'json'
-require_relative './migration_data'
+require 'kongrations/migration_data'
 
 module Kongrations
   class Response

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative './hash_ext'
-require_relative './current_environment'
+require 'kongrations/hash_ext'
+require 'kongrations/current_environment'
 
 module Kongrations
   using HashExt
