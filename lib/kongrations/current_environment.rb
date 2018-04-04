@@ -16,9 +16,14 @@ module Kongrations
       config = YAML.safe_load(yaml)
       environment = config['environments'].detect { |e| e['name'] == name }
 
+      @migrations_folder = config.fetch('path', './migrations')
       @name = name
       @kong_admin_url = environment['kong-admin-url']
       @kong_admin_api_key = environment['kong-admin-api-key']
+    end
+
+    def self.migrations_folder
+      @migrations_folder
     end
 
     def self.name

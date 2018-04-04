@@ -6,10 +6,10 @@ require 'kongrations/migration_data'
 require 'kongrations/current_environment'
 
 module Kongrations
-  def self.run(migrations_folder, env = 'default')
+  def self.run(env = 'default')
     CurrentEnvironment.load!(env)
 
-    migrations = migrations_to_run(migrations_folder)
+    migrations = migrations_to_run
 
     migrations.each do |migration_file|
       migration_name = File.basename(migration_file).gsub('.rb', '')
@@ -28,7 +28,8 @@ module Kongrations
     end
   end
 
-  def self.migrations_to_run(folder)
+  def self.migrations_to_run
+    folder = CurrentEnvironment.migrations_folder
     migration_files = Dir.glob(File.join(folder, '*.rb'))
 
     MigrationData.load!
