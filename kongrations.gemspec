@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Migrations for Kong APIs, plugin and consumers.'
   spec.description   = 'Migrations like for your Kong APIs, plugin and consumers.
                         It enables you to create files which describes the operations to be performed on Kong.'
-  spec.homepage      = ''
+  spec.homepage      = 'https://github.com/danilospa/kongrations'
   spec.license       = 'MIT'
 
   spec.executables << 'kongrations'
