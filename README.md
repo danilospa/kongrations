@@ -86,6 +86,9 @@ Every request body described oh the Kong Admin API documentation must be set usi
 
 After running the migration, Kongrations create a file on `./migrations-data` for each Kong environment to store its state. This file should be commited into your version control system. Also, it's extremely important not to touch this file directly, since it's crucial for Kongrations to work normally.
 
+Place your migration files inside `./migrations` folder. You can change the default folder putting a `path` key on `kongrations.yml` file.  
+You also need to use `.rb` extension on them.
+
 To run the migrations, use Kongrations cli, passing an optional parameter to specify the environment name (default environment name is `default`).  
 Examples:
 ```shell
