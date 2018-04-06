@@ -5,7 +5,7 @@ RSpec.shared_examples 'behaves like a migration' do |migrations_folder, data_to_
   let(:migrations_path) { "./spec/fixtures/migrations/#{migrations_folder}" }
   let(:file_name) do
     migration_file = Dir.glob(File.join(migrations_path, '*.rb')).first
-    File.basename(migration_file).gsub('.rb', '')
+    File.basename(migration_file)
   end
   let(:migration_data) do
     JSON.parse(File.read(Kongrations::MigrationData.file_name), symbolize_names: true)

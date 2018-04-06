@@ -12,7 +12,7 @@ module Kongrations
     migrations = migrations_to_run
 
     migrations.each do |migration_file|
-      migration_name = File.basename(migration_file).gsub('.rb', '')
+      migration_name = File.basename(migration_file)
       migration_content = File.read(migration_file)
 
       migration = Migration.build(migration_name, env, migration_content)
@@ -36,7 +36,7 @@ module Kongrations
     last_migration = MigrationData.last_migration
     return migration_files if last_migration.nil?
 
-    last_migration_index = migration_files.find_index { |m| m.end_with?("#{last_migration}.rb") }
+    last_migration_index = migration_files.find_index { |m| m.end_with?(last_migration) }
     migration_files.slice!(0, last_migration_index + 1)
     migration_files
   end

@@ -222,7 +222,7 @@ RSpec.describe Kongrations do
     context 'when running migration after the first one has already be run' do
       before do
         mock_default_config_file('change_api_after_already_run_migration')
-        mock_data_file(last_migration: '01_create_api')
+        mock_data_file(last_migration: '01_create_api.rb')
         @request_stub = stub_change_api_request('api name', upstream_url: 'upstream url')
         subject.run
       end
