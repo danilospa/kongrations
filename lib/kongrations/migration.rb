@@ -43,19 +43,19 @@ module Kongrations
       DeleteApiRequest.new(name)
     end
 
-    def create_plugin_for(api_name)
+    def create_plugin_for_api(api_name)
       create_plugin_request = CreatePluginRequest.new(api_name)
       yield(create_plugin_request)
       create_plugin_request
     end
 
-    def change_plugin_for(api_name, plugin_name)
+    def change_plugin_for_api(api_name, plugin_name)
       change_plugin_request = ChangePluginRequest.new(api_name, plugin_name)
       yield(change_plugin_request)
       change_plugin_request
     end
 
-    def delete_plugin_for(api_name, plugin_name)
+    def delete_plugin_for_api(api_name, plugin_name)
       DeletePluginRequest.new(api_name, plugin_name)
     end
 

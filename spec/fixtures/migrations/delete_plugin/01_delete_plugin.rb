@@ -1,1 +1,1 @@
-delete_plugin_for 'api name', 'cors'
+delete_plugin_for_api 'api name', 'cors'

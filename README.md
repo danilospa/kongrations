@@ -135,10 +135,10 @@ delete_api 'api-name'
 #### Create Plugin
 
 - [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#add-plugin)
-- Usage: pass your API name right after `create_plugin_for` method, then pass the request body through `plugin.payload`.
+- Usage: pass your API name right after `create_plugin_for_api` method, then pass the request body through `plugin.payload`.
 - Example:
 ```ruby
-create_plugin_for 'api-name' do |plugin|
+create_plugin_for_api 'api-name' do |plugin|
   plugin.payload = {
     name: 'cors',
     config: {
@@ -152,10 +152,10 @@ end
 #### Update Plugin
 
 - [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#update-plugin)
-- Usage: pass your API and plugin names right after `change_plugin_for` method, then pass the request body through `plugin.payload`.
+- Usage: pass your API and plugin names right after `change_plugin_for_api` method, then pass the request body through `plugin.payload`.
 - Example:
 ```ruby
-change_plugin_for 'api-name', 'cors' do |plugin|
+change_plugin_for_api 'api-name', 'cors' do |plugin|
   plugin.payload = {
     config: {
       methods: 'GET'
@@ -167,8 +167,8 @@ end
 #### Delete Plugin
 
 - [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#delete-plugin)
-- Usage: pass your API and plugin names right after `delete_plugin_for` method.
+- Usage: pass your API and plugin names right after `delete_plugin_for_api` method.
 - Example:
 ```ruby
-delete_plugin_for 'api-name', 'cors'
+delete_plugin_for_api 'api-name', 'cors'
 ```
