@@ -163,3 +163,12 @@ change_plugin_for 'api-name', 'cors' do |plugin|
   }
 end
 ```
+
+#### Delete Plugin
+
+- [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#delete-plugin)
+- Usage: pass your API and plugin names right after `delete_plugin_for` method.
+- Example:
+```ruby
+delete_plugin_for 'api-name', 'cors'
+```

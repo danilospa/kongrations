@@ -55,6 +55,10 @@ module Kongrations
       change_plugin_request
     end
 
+    def delete_plugin_for(api_name, plugin_name)
+      DeletePluginRequest.new(api_name, plugin_name)
+    end
+
     def self.build(migration_name, current_env, conten_to_eval)
       klass = new(migration_name, current_env)
       klass.instance_eval("def change; #{conten_to_eval}; end", __FILE__, __LINE__)

@@ -40,6 +40,10 @@ def stub_change_plugin_request(api_name, plugin_id, payload)
   stub_kong_request(:patch, "/apis/#{api_name}/plugins/#{plugin_id}", payload)
 end
 
+def stub_delete_plugin_request(api_name, plugin_id)
+  stub_kong_request(:delete, "/apis/#{api_name}/plugins/#{plugin_id}", nil)
+end
+
 def delete_mocked_files
   File.delete(Kongrations::MigrationData.file_name) if File.exist?(Kongrations::MigrationData.file_name)
   File.delete(Kongrations::CurrentEnvironment::FILE_NAME) if File.exist?(Kongrations::CurrentEnvironment::FILE_NAME)
@@ -142,6 +146,19 @@ RSpec.describe Kongrations do
       end
 
       include_examples 'behaves like a migration', 'change_plugin'
+    end
+
+    context 'when deleting plugin on api' do
+      before do
+        @request_stub = stub_delete_plugin_request('api name', 'plugin id')
+        mock_data_file('api name': {
+                         plugins: {
+                           cors: 'plugin id'
+                         }
+                       })
+      end
+
+      include_examples 'behaves like a migration', 'delete_plugin'
     end
 
     context 'when changing plugin after creating it' do
