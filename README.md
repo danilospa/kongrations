@@ -1,5 +1,8 @@
 # Kongrations
 
+[![Build Status](https://travis-ci.org/danilospa/kongrations.svg?branch=master)](https://travis-ci.org/danilospa/kongrations)
+[![Maintainability](https://api.codeclimate.com/v1/badges/90e3435368aaf9b4023a/maintainability)](https://codeclimate.com/github/danilospa/kongrations/maintainability)
+
 ## Description
 
 Kongrations is a migrations like for [Kong](https://github.com/Kong/kong) APIs and its associations like consumers and plugins.  
