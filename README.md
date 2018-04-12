@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/danilospa/kongrations.svg?branch=master)](https://travis-ci.org/danilospa/kongrations)
 [![Maintainability](https://api.codeclimate.com/v1/badges/90e3435368aaf9b4023a/maintainability)](https://codeclimate.com/github/danilospa/kongrations/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/90e3435368aaf9b4023a/test_coverage)](https://codeclimate.com/github/danilospa/kongrations/test_coverage)
 
 ## Description
 
