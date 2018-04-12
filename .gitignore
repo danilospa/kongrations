@@ -2,3 +2,4 @@
 migrations-data/
 kongrations.yml
 Gemfile.lock
+coverage
