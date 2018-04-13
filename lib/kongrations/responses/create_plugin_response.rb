@@ -9,9 +9,11 @@ module Kongrations
       plugin_name = @request.payload[:name]
       plugin_id = body[:id]
       {
-        api_name => {
-          'plugins' => {
-            plugin_name => plugin_id
+        'apis' => {
+          api_name => {
+            'plugins' => {
+              plugin_name => plugin_id
+            }
           }
         }
       }

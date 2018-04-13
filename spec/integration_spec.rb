@@ -120,9 +120,11 @@ RSpec.describe Kongrations do
       end
 
       data_to_save = {
-        'api name': {
-          plugins: {
-            cors: 'plugin id'
+        'apis': {
+          'api name': {
+            plugins: {
+              cors: 'plugin id'
+            }
           }
         }
       }
@@ -138,9 +140,11 @@ RSpec.describe Kongrations do
           }
         }
         @request_stub = stub_change_plugin_request('api name', 'plugin id', payload)
-        mock_data_file('api name': {
-                         plugins: {
-                           cors: 'plugin id'
+        mock_data_file('apis': {
+                         'api name': {
+                           plugins: {
+                             cors: 'plugin id'
+                           }
                          }
                        })
       end
@@ -212,7 +216,7 @@ RSpec.describe Kongrations do
 
       it 'saves data for two plugins on migration data file' do
         content = JSON.parse(File.read(Kongrations::MigrationData.file_name), symbolize_names: true)
-        expect(content[:'api name']).to eq plugins: {
+        expect(content[:apis][:'api name']).to eq plugins: {
           cors: 'first plugin id',
           apikey: 'second plugin id'
         }
