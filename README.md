@@ -165,6 +165,15 @@ change_consumer 'username' do |consumer|
 end
 ```
 
+#### Delete Consumer
+
+- [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#delete-consumer)
+- Usage: pass your username or custom_id right after `delete_consumer` method.
+- Example:
+```ruby
+delete_consumer 'username'
+```
+
 #### Create Plugin
 
 - [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#add-plugin)
