@@ -49,6 +49,12 @@ module Kongrations
       create_consumer_request
     end
 
+    def change_consumer(username)
+      change_consumer_request = ChangeConsumerRequest.new(username)
+      yield(change_consumer_request)
+      change_consumer_request
+    end
+
     def create_plugin_for_api(api_name)
       create_plugin_request = CreatePluginRequest.new(api_name)
       yield(create_plugin_request)

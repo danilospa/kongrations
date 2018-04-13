@@ -152,6 +152,19 @@ create_consumer do |consumer|
 end
 ```
 
+#### Update Consumer
+
+- [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#update-consumer)
+- Usage: pass your consumer username or custom_id right after `change_consumer` method, then pass the request body through `consumer.payload`.
+- Example:
+```ruby
+change_consumer 'username' do |consumer|
+  consumer.payload = {
+    username: 'new-username'
+  }
+end
+```
+
 #### Create Plugin
 
 - [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#add-plugin)
