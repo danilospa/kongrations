@@ -32,6 +32,10 @@ def stub_delete_api_request(api_name)
   stub_kong_request(:delete, "/apis/#{api_name}", nil)
 end
 
+def stub_create_consumer_request(payload)
+  stub_kong_request(:post, '/consumers', payload)
+end
+
 def stub_create_plugin_request(api_name, payload, response)
   stub_kong_request(:post, "/apis/#{api_name}/plugins", payload, response)
 end
@@ -102,6 +106,15 @@ RSpec.describe Kongrations do
       end
 
       include_examples 'behaves like a migration', 'delete_api'
+    end
+
+    context 'when creating consumer' do
+      before do
+        payload = 'consumer payload'
+        @request_stub = stub_create_consumer_request(payload)
+      end
+
+      include_examples 'behaves like a migration', 'create_consumer'
     end
 
     context 'when creating plugin on api' do

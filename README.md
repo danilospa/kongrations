@@ -139,6 +139,19 @@ end
 delete_api 'api-name'
 ```
 
+#### Create Consumer
+
+- [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#create-consumer)
+- Usage: pass the request body through `consumer.payload`.
+- Example:
+```ruby
+create_consumer do |consumer|
+  consumer.payload = {
+    username: 'my-username'
+  }
+end
+```
+
 #### Create Plugin
 
 - [Kong Admin API Reference](https://getkong.org/docs/0.13.x/admin-api/#add-plugin)

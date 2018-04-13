@@ -43,6 +43,12 @@ module Kongrations
       DeleteApiRequest.new(name)
     end
 
+    def create_consumer
+      create_consumer_request = CreateConsumerRequest.new
+      yield(create_consumer_request)
+      create_consumer_request
+    end
+
     def create_plugin_for_api(api_name)
       create_plugin_request = CreatePluginRequest.new(api_name)
       yield(create_plugin_request)
