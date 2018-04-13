@@ -7,7 +7,7 @@ module Kongrations
   using HashExt
 
   module MigrationData
-    PATH = './migrations-data'
+    PATH = './migrations-data'.freeze
 
     def self.load!
       @data = File.exist?(file_name) ? JSON.parse(File.read(file_name)) : {}

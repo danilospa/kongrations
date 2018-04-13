@@ -5,7 +5,7 @@ require 'erb'
 
 module Kongrations
   module CurrentEnvironment
-    FILE_NAME = 'kongrations.yml'
+    FILE_NAME = 'kongrations.yml'.freeze
 
     def self.load!(name)
       yaml = File.read(FILE_NAME)

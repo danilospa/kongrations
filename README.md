@@ -34,7 +34,7 @@ Kongrations was built upon Kong 0.13.x documentation.
 
 ## Getting Started
 
-Kongrations depends on Ruby. Make sure you have it installed, then install Kongrations gem.
+Kongrations depends on Ruby 2.2 or greater. Make sure you have it installed, then install Kongrations gem.
 
 ```ruby
 gem install kongrations
